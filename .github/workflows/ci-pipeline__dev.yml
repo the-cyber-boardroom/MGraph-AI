@@ -47,6 +47,6 @@ jobs:
         uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/git__update_branch@dev
 
       - name: publish-to-pypi
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__publish@dev
+        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__twine__publish@dev
     needs:
       - increment-tag
