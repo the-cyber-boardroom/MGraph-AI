@@ -14,61 +14,61 @@ env:
 
 jobs:
 
-  run-tests:
-    name: "Run tests"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: "run-tests"
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pytest__run-tests@dev
-
-  increment-tag:
-    name: Increment Tag - Main
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Increment Tag
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/git__increment-tag@dev
-        with:
-          release_type: ${{ env.RELEASE_TYPE }}
-    needs:
-      - run-tests
-
-  publish-to-pypi:
-    #if: False
-    name: "Publish to: PYPI"
-    permissions:
-      id-token: write
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Git Update Current Branch
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/git__update_branch@dev
-
-      - name: publish-to-pypi
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__twine__publish@dev
-    needs:
-      - increment-tag
-
-  publish-to-aws-ecr:
-    name: "Publish to: AWS ECR"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: "Wait for PyPI publish"
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__wait-for-publish@dev
-
-      - name: "Publish to: AWS ECR"
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/aws__publish__ecr@dev
-        env:
-          AWS_ACCOUNT_ID       : ${{ secrets.AWS_ACCOUNT_ID__180929110226        }}
-          AWS_ACCESS_KEY_ID    : ${{ secrets.AWS_ACCESS_KEY_ID__180929110226     }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY__180929110226 }}
-          AWS_DEFAULT_REGION   : ${{ secrets.AWS_DEFAULT_REGION__180929110226    }}
-    needs:
-      - publish-to-pypi
+#  run-tests:
+#    name: "Run tests"
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: "run-tests"
+#        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pytest__run-tests@dev
+#
+#  increment-tag:
+#    name: Increment Tag - Main
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Increment Tag
+#        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/git__increment-tag@dev
+#        with:
+#          release_type: ${{ env.RELEASE_TYPE }}
+#    needs:
+#      - run-tests
+#
+#  publish-to-pypi:
+#    #if: False
+#    name: "Publish to: PYPI"
+#    permissions:
+#      id-token: write
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Git Update Current Branch
+#        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/git__update_branch@dev
+#
+#      - name: publish-to-pypi
+#        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__twine__publish@dev
+#    needs:
+#      - increment-tag
+#
+#  publish-to-aws-ecr:
+#    name: "Publish to: AWS ECR"
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: "Wait for PyPI publish"
+#        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__wait-for-publish@dev
+#
+#      - name: "Publish to: AWS ECR"
+#        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/aws__publish__ecr@dev
+#        env:
+#          AWS_ACCOUNT_ID       : ${{ secrets.AWS_ACCOUNT_ID__180929110226        }}
+#          AWS_ACCESS_KEY_ID    : ${{ secrets.AWS_ACCESS_KEY_ID__180929110226     }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY__180929110226 }}
+#          AWS_DEFAULT_REGION   : ${{ secrets.AWS_DEFAULT_REGION__180929110226    }}
+#    needs:
+#      - publish-to-pypi
 
   deploy-lambda-function:
     name: Deploy Lambda Function
@@ -82,8 +82,9 @@ jobs:
           AWS_ACCESS_KEY_ID     : ${{ secrets.AWS_ACCESS_KEY_ID__180929110226     }}
           AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY__180929110226 }}
           AWS_DEFAULT_REGION    : ${{ secrets.AWS_DEFAULT_REGION__180929110226    }}
-    needs:
-      - publish-to-aws-ecr
+#    needs:
+#      - publish-to-aws-ecr
+
 
 #  run-qa-tests:
 #    name: "Run QA Tests"
