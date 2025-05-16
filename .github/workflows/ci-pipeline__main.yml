@@ -8,7 +8,7 @@ on:
 env:
   GIT__BRANCH      : 'main'
   RELEASE_TYPE     : 'major'
-  PACKAGE_NAME     : 'mgraph_ai_serverless'
+  PACKAGE_NAME     : 'mgraph_ai'
   DOCKER__CONTEXT  : "."
   DOCKER__FILE     : './deploy/docker/mgraph-ai/Dockerfile'
 
@@ -20,12 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: "run-tests"
-        uses: ./.github/actions/run-tests
-        env:
-          AWS_ACCOUNT_ID       : ${{ secrets.AWS_ACCOUNT_ID__180929110226        }}
-          AWS_ACCESS_KEY_ID    : ${{ secrets.AWS_ACCESS_KEY_ID__180929110226     }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY__180929110226 }}
-          AWS_DEFAULT_REGION   : ${{ secrets.AWS_DEFAULT_REGION__180929110226    }}
+        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pytest__run-tests@dev
 
   increment-tag:
     name: Increment Tag - Main
