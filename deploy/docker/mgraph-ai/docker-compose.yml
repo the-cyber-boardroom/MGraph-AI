@@ -1,0 +1,14 @@
+services:
+  mgraph_ai_serverless:
+    build:
+      context: ../../..
+      dockerfile: ./deploy/docker/mgraph-ai/Dockerfile
+    platform: linux/amd64
+    container_name: mgraph_ai_serverless
+    tty: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../../../mgraph_ai:/app/mgraph_ai
+    env_file:
+      - ../../../.env
