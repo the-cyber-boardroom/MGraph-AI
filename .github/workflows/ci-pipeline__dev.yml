@@ -18,7 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: "run-tests"
-        uses: ./.github/actions/run-tests
+        #uses: ./.github/actions/run-tests
+        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pytest__run-tests@dev
 
   increment-tag:
     name: Increment Tag - DEV
@@ -33,7 +34,7 @@ jobs:
       - run-tests
 
   publish-to-pypi:
-    if: False
+    #if: False
     name: "Publish to: PYPI"
     permissions:
       id-token: write
@@ -46,6 +47,6 @@ jobs:
         uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/git__update_branch@dev
 
       - name: publish-to-pypi
-        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__publish@dev
+        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pypi__twine__publish@dev
     needs:
       - increment-tag
